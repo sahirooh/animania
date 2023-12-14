@@ -1,19 +1,30 @@
 'use client'
 
+import { fetchAnime } from "@/app/action";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {useInView} from "react-intersection-observer";
+import AnimeCard, { AnimeProp } from "./AnimeCard";
 
 function LoadMore() {
-
+  const [data, setData] = useState<AnimeProp[]>([]);
   const {ref, inView} = useInView();
 
   useEffect(() => {
-    if(inView){alert("Load More")}
-  },[inView])
+    if(inView){
+      fetchAnime(2).then((res) => {
+        setData([...data, ...res])
+      })
+    }
+  },[inView, data])
 
   return (
     <>
+      <section className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10">
+        {data.map((item: AnimeProp, index: number) => (
+          <AnimeCard key={item.id} anime={item} index={index} />
+        ))}
+      </section>
       <section className="flex justify-center items-center w-full">
         <div ref={ref}>
           <Image
