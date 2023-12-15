@@ -23,13 +23,13 @@ const variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 };
-function AnimeCard({ anime }: Prop) {
+function AnimeCard({ anime, index }: Prop) {
   return (
     <MotionDiv
       variants={variants}
       initial="hidden"
       animate="visible"
-      transition={{ delay: 1, ease: "easeInOut", duration: 0.5 }}
+      transition={{ delay: index * 0.20, ease: "easeInOut", duration: 0.5 }}
       viewport={{ amount: 0 }}
       className="max-w-sm rounded relative w-full"
     >
